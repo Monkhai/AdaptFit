@@ -1,0 +1,36 @@
+{
+  "workout": "Sample Workout",
+  "exercises": [
+    {
+      "name": "Push ups to Pull ups",
+      "exercise_id": {
+        "_id": "123456781234567812345678"
+      },
+      "type": "superset",
+      "exercises": [
+        {
+          "name": "push ups",
+          "exercise_id": {
+            "_id": "123456781234567812345679"
+          },
+          "sets": 4,
+          "reps": 15,
+          "weight": "bodyweight",
+          "rest": null
+        },
+        {
+          "name": "pull ups",
+          "exercise_id": {
+            "_id": "123456781234567812345677"
+          },
+          "sets": 4,
+          "reps": 8,
+          "weight": "bodyweight",
+          "rest": null
+        },
+        {
+          "rest_after_exercise": 60,
+          "rest_after_set": 60
+        }
+  ]
+}

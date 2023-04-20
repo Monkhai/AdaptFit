@@ -1,0 +1,35 @@
+{
+  "workout name": "Demo workout",
+  "Description": "text text text",
+  "exercises": [
+    {
+      "1": {
+        "order": 3,
+        "name": "Dips",
+        "id": "123456781234567812345678",
+        "sets": {
+          "1": {
+            "reps": 10,
+            "weight": 0
+          },
+          "2": {
+            "reps": 12,
+            "weight": 0
+          },
+          "3": {
+            "reps": 14,
+            "weight": 0
+          },
+          "4": {
+            "reps": 12,
+            "weight": 0
+          },
+          "5": {
+            "reps": 10,
+            "weight": 0
+          }
+        }
+      }
+    }
+  ]
+}
