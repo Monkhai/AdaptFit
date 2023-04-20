@@ -6,7 +6,15 @@ const {
 } = require('../validators/exerciseValidators');
 const { User } = require('../users/userModel');
 
+//getUser function
+async function getUser(indentifier) {
+  const user = await User.findById(indentifier);
+  if (!user) return null;
+  return user;
+}
+
 exports.getExercises = async (req, res) => {
+  //use getUser function
   let user = await User.findById(req.user._id);
   if (!user) return res.status(400).send('Bad request: can not find user.');
 
@@ -18,6 +26,7 @@ exports.getExercises = async (req, res) => {
 
 exports.getOneExercise = async (req, res) => {
   //get user
+  //make into independent getUser function
   let user = await User.findById(req.user._id);
   if (!user) return res.status(400).send('Bad request: can not find user.');
 
@@ -36,6 +45,7 @@ exports.createExercise = async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   //validate and get user using token
+  //use getUser function
   const user = await User.findById(req.user._id);
   if (!user) return res.status(400).send('Bad request: can not find user.');
 
@@ -44,7 +54,9 @@ exports.createExercise = async (req, res) => {
   const { id } = user;
 
   //check if exercise already exists
-  let exercise = await Exercise.findOne({ name: name });
+  let exercise = await Exercise.findOne({ name: name }).and({
+    $or: [{ 'created_by.user': user.id }, { public: true }],
+  });
   if (exercise) return res.status(401).send('Exercise already exists');
 
   //create new exercise with user information and the exercise name
@@ -81,6 +93,7 @@ exports.updateExercise = async (req, res) => {
   const { error } = validateUpdateReq(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
+  //use getUser function
   const user = await User.findById(req.user._id);
   if (!user) return res.status(400).send('Bad request: can not find user.');
 

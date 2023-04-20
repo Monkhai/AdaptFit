@@ -7,6 +7,13 @@ const {
   authorizeUser,
 } = require('../validators/userValidators');
 
+//todo:
+// - hash passwords and validate passwords in logging and authorization
+// - move isRegistered function and getSelf function
+// - create getUser funcion to get others' user
+// - move token from header to cookie (in auth module as well)
+// - update user rather than update username, password, and email separately
+
 //register user//
 exports.registerUser = async (req, res) => {
   //validate req
@@ -37,9 +44,9 @@ exports.registerUser = async (req, res) => {
 };
 
 //get user//
-exports.getUser = async (req, res) => {
+exports.getSelf = async (req, res) => {
   const user = await User.findById(req.user._id);
-  if (!user) return res.status(404).send('An account with this email does not exist.');
+  if (!user) return res.status(404).send('This account does not exist.');
 
   const { username, email } = user;
   res.send(username, email);
