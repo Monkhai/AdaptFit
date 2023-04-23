@@ -19,7 +19,4 @@ function authorizeUser(user) {
 }
 
 exports.validateUser = validateUser;
-exports.validateUsername = validateUsername;
-exports.validateEmail = validateEmail;
-exports.validatePassword = validatePassword;
 exports.authorizeUser = authorizeUser;

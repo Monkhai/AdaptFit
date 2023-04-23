@@ -1,18 +1,20 @@
 const winston = require('winston');
+const { combine, colorize, printf } = winston.format;
 require('express-async-errors');
 
+const myFormat = printf(({ level, message, timestamp }) => {
+  return `${level}: ${message}`;
+});
+
 const logger = winston.createLogger({
-  format: winston.format.combine(
-    winston.format.colorize({ all: true }),
-    winston.format.simple({ all: true })
-  ),
-  transports: [new winston.transports.Console({ filename: 'combined.log' })],
+  format: combine(colorize(), myFormat),
+  transports: [new winston.transports.Console()],
   rejectionHandlers: [
-    new winston.transports.File({ filename: 'rejections.log' }),
+    new winston.transports.File({ filename: './loggerMessages/rejections.log' }),
     new winston.transports.Console(),
   ],
   exceptionHandlers: [
-    new winston.transports.File({ filename: 'exceptions.log' }),
+    new winston.transports.File({ filename: './loggerMessages/exceptions.log' }),
     new winston.transports.Console(),
   ],
 });
