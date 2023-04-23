@@ -10,31 +10,6 @@ function validateUser(user) {
   return schema.validate(user);
 }
 
-function validateUsername(username) {
-  const schema = Joi.object({
-    email: Joi.string().min(5).max(255).required().email(),
-    username: Joi.string().min(5).max(50).required(),
-  });
-  return schema.validate(username);
-}
-
-function validateEmail(email) {
-  const schema = Joi.object({
-    email: Joi.string().min(5).max(255).required().email(),
-    new_email: Joi.string().min(5).max(255).required().email(),
-  });
-  return schema.validate(email);
-}
-
-function validatePassword(passowrd) {
-  const schema = Joi.object({
-    email: Joi.string().min(5).max(255).required().email(),
-    old_passowrd: Joi.string().min(5).max(50).required(),
-    new_passowrd: Joi.string().min(5).max(50).required(),
-  });
-  return schema.validate(passowrd);
-}
-
 function authorizeUser(user) {
   const schema = Joi.object({
     email: Joi.string().min(5).max(255).required().email(),

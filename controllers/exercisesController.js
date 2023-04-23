@@ -5,17 +5,14 @@ const {
   validateUpdateReq,
 } = require('../validators/exerciseValidators');
 const { User } = require('../users/userModel');
+const { findUser } = require('../users/findUser');
 
-//getUser function
-async function getUser(indentifier) {
-  const user = await User.findById(indentifier);
-  if (!user) return null;
-  return user;
-}
+//todo
+//- add description and gif abilities to exercise schema
 
 exports.getExercises = async (req, res) => {
   //use getUser function
-  let user = await User.findById(req.user._id);
+  let user = await findUser(req.user._id);
   if (!user) return res.status(400).send('Bad request: can not find user.');
 
   const exercises = await Exercise.find({
@@ -27,7 +24,7 @@ exports.getExercises = async (req, res) => {
 exports.getOneExercise = async (req, res) => {
   //get user
   //make into independent getUser function
-  let user = await User.findById(req.user._id);
+  let user = await findUser(req.user._id);
   if (!user) return res.status(400).send('Bad request: can not find user.');
 
   //find exercise if it is public or created by user
@@ -45,8 +42,8 @@ exports.createExercise = async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   //validate and get user using token
-  //use getUser function
-  const user = await User.findById(req.user._id);
+
+  const user = await findUser(req.user._id);
   if (!user) return res.status(400).send('Bad request: can not find user.');
 
   //get properties
@@ -75,7 +72,7 @@ exports.deleteExercise = async (req, res) => {
   const { error } = validateDeleteReq(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const user = await User.findById(req.user._id);
+  const user = await findUser(req.user._id);
   if (!user) return res.status(400).send('Bad request: can not find user.');
 
   const exercise = await Exercise.findById(req.body.id);
@@ -94,7 +91,7 @@ exports.updateExercise = async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   //use getUser function
-  const user = await User.findById(req.user._id);
+  const user = await findUser(req.user._id);
   if (!user) return res.status(400).send('Bad request: can not find user.');
 
   let exercise = await Exercise.findById(req.body.id);
